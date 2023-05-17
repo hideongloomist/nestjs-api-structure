@@ -6,15 +6,12 @@
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "sonarjs",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "sonarjs", "jest", "prettier"],
   "extends": [
     "eslint:recommended",
     "airbnb-base",
     "airbnb-typescript/base",
+    "plugin:jest/recommended",
     "plugin:sonarjs/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
@@ -27,21 +24,147 @@
     "typings/**"
   ],
   "rules": {
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error"
+    "no-cond-assign": "off",
+    "no-irregular-whitespace": "error",
+    "no-unexpected-multiline": "error",
+    "valid-jsdoc": [
+      "error",
+      {
+        "requireParamDescription": false,
+        "requireReturnDescription": false,
+        "requireReturn": false,
+        "prefer": {
+          "returns": "return"
+        }
+      }
     ],
+    "curly": ["error", "multi-line"],
+    "guard-for-in": "error",
+    "no-caller": "error",
+    "no-extend-native": "error",
+    "no-extra-bind": "error",
+    "no-invalid-this": "error",
+    "no-multi-spaces": "error",
+    "no-multi-str": "error",
+    "no-new-wrappers": "error",
+    "no-throw-literal": "error",
+    "no-with": "error",
+    "prefer-promise-reject-errors": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ],
+    "array-bracket-newline": "off",
+    // eslint:recommended
+    "array-bracket-spacing": ["error", "never"],
+    "array-element-newline": "off",
+    // eslint:recommended
+    "block-spacing": ["error", "never"],
+    "brace-style": "off",
+    "camelcase": [
+      "error",
+      {
+        "properties": "never"
+      }
+    ],
+    "comma-dangle": ["error", "always-multiline"],
+    "comma-spacing": "error",
+    "comma-style": "error",
+    "computed-property-spacing": "error",
+    "eol-last": "error",
+    "func-call-spacing": "error",
+    "key-spacing": "error",
+    "keyword-spacing": "error",
+    "linebreak-style": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 80,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "new-cap": "error",
+    "no-array-constructor": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2
+      }
+    ],
+    "no-new-object": "error",
+    "no-tabs": "error",
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": "error",
+    //"object-property-newline":"off",
+    "one-var": [
+      "error",
+      {
+        "var": "never",
+        "let": "never",
+        "const": "never"
+      }
+    ],
+    //"one-var-declaration-per-line":"off",
+    //"operator-assignment":"off",
+    "operator-linebreak": ["error", "after"],
+    "padded-blocks": ["error", "never"],
+    //"padding-line-between-statements":"off",
+    "quote-props": ["error", "consistent"],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true
+        }
+      }
+    ],
+    "semi": "error",
+    "semi-spacing": "error",
+    "space-before-blocks": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "asyncArrow": "always",
+        "anonymous": "never",
+        "named": "never"
+      }
+    ],
+    "spaced-comment": ["error", "always"],
+    "switch-colon-spacing": "error",
+    "arrow-parens": ["error", "always"],
+    "constructor-super": "error",
+    "generator-star-spacing": ["error", "after"],
+    "no-new-symbol": "error",
+    "no-this-before-super": "error",
+    "no-var": "error",
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all"
+      }
+    ],
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "rest-spread-spacing": "error",
+    "yield-star-spacing": ["error", "after"],
+    "@typescript-eslint/no-unused-vars": ["error"],
     "class-methods-use-this": "off",
     // https://github.com/typescript-eslint/typescript-eslint/issues/1277
     "consistent-return": "off",
     "func-names": "off",
-    "max-len": [
-      "error",
-      {
-        "code": 140,
-        "ignoreTemplateLiterals": true
-      }
-    ],
     "newline-per-chained-call": "off",
     "no-await-in-loop": "off",
     "no-continue": "off",
@@ -63,9 +186,7 @@
     "no-underscore-dangle": [
       "error",
       {
-        "allow": [
-          "_id"
-        ]
+        "allow": ["_id"]
       }
     ],
     "no-void": [
@@ -75,19 +196,6 @@
       }
     ],
     "object-curly-newline": "off",
-    "spaced-comment": [
-      "error",
-      "always",
-      {
-        "line": {
-          "markers": [
-            "/",
-            "#region",
-            "#endregion"
-          ]
-        }
-      }
-    ],
     // Change eslint rule to @typescript-eslint rule
     "lines-between-class-members": [
       "error",
@@ -101,7 +209,6 @@
     "no-loop-func": "off",
     "no-return-await": "off",
     "no-unused-expressions": "off",
-    "object-curly-spacing": "off",
     // https://github.com/benmosher/eslint-plugin-import/issues/1753
     "import/named": "off",
     // https://github.com/benmosher/eslint-plugin-import/issues/1453
@@ -110,13 +217,7 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          [
-            "builtin",
-            "external",
-            "internal"
-          ]
-        ],
+        "groups": [["builtin", "external", "internal"]],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
@@ -149,27 +250,17 @@
       "error",
       {
         "selector": "default",
-        "format": [
-          "strictCamelCase"
-        ]
+        "format": ["strictCamelCase"]
       },
       {
         "selector": "variable",
-        "format": [
-          "strictCamelCase",
-          "UPPER_CASE",
-          "StrictPascalCase"
-        ]
+        "format": ["strictCamelCase", "UPPER_CASE", "StrictPascalCase"]
       },
       // https://github.com/microsoft/TypeScript/issues/9458
       {
         "selector": "parameter",
-        "modifiers": [
-          "unused"
-        ],
-        "format": [
-          "strictCamelCase"
-        ],
+        "modifiers": ["unused"],
+        "format": ["strictCamelCase"],
         "leadingUnderscore": "allow"
       },
       {
@@ -182,15 +273,11 @@
       },
       {
         "selector": "typeLike",
-        "format": [
-          "StrictPascalCase"
-        ]
+        "format": ["StrictPascalCase"]
       },
       {
         "selector": "enumMember",
-        "format": [
-          "UPPER_CASE"
-        ]
+        "format": ["UPPER_CASE"]
       }
     ],
     "@typescript-eslint/no-dupe-class-members": "error",
@@ -224,10 +311,7 @@
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unused-expressions": "error",
-    "@typescript-eslint/object-curly-spacing": [
-      "error",
-      "always"
-    ],
+    "@typescript-eslint/object-curly-spacing": ["error", "always"],
     "@typescript-eslint/prefer-includes": "off",
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/promise-function-async": "error",
@@ -250,7 +334,10 @@
     ],
     "sonarjs/no-duplicate-string": "off",
     "prettier/prettier": [
-      "error"
+      "error",
+      {
+        "usePrettierrc": false
+      }
     ]
   }
 }
